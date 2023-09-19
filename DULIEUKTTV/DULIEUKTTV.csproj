@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{222E4D5F-5C19-4F93-8C0C-3903E5745A99}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DULIEUKTTV</RootNamespace>
+    <AssemblyName>DULIEUKTTV</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BanDo.cs">
+      <DependentUpon>DataKhiTuongThuyVan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BanTinDuBao.cs">
+      <DependentUpon>DataKhiTuongThuyVan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CapDo.cs">
+      <DependentUpon>DataKhiTuongThuyVan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Class1.cs" />
+    <Compile Include="DataKhiTuongThuyVan.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataKhiTuongThuyVan.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataKhiTuongThuyVan.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataKhiTuongThuyVan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataKhiTuongThuyVan.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataKhiTuongThuyVan.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DonViThoiGian.cs">
+      <DependentUpon>DataKhiTuongThuyVan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DonViToChuc.cs">
+      <DependentUpon>DataKhiTuongThuyVan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DVHC_Huyen.cs">
+      <DependentUpon>DataKhiTuongThuyVan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DVHC_Tinh.cs">
+      <DependentUpon>DataKhiTuongThuyVan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DVHC_Xa.cs">
+      <DependentUpon>DataKhiTuongThuyVan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="File_DinhKem.cs">
+      <DependentUpon>DataKhiTuongThuyVan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="KhuVuc.cs">
+      <DependentUpon>DataKhiTuongThuyVan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="KhuVucHanhChinh.cs">
+      <DependentUpon>DataKhiTuongThuyVan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LoaiBanTin.cs">
+      <DependentUpon>DataKhiTuongThuyVan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LoaiThienTai.cs">
+      <DependentUpon>DataKhiTuongThuyVan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PhimHinhAnh.cs">
+      <DependentUpon>DataKhiTuongThuyVan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TaiLieu.cs">
+      <DependentUpon>DataKhiTuongThuyVan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TapTinDinhKem.cs">
+      <DependentUpon>DataKhiTuongThuyVan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ThanhPhanDuBao.cs">
+      <DependentUpon>DataKhiTuongThuyVan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ThoiHanDuBao.cs">
+      <DependentUpon>DataKhiTuongThuyVan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ThongTinGiayPhep.cs">
+      <DependentUpon>DataKhiTuongThuyVan.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="DataKhiTuongThuyVan.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DataKhiTuongThuyVan.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <None Include="DataKhiTuongThuyVan.edmx.diagram">
+      <DependentUpon>DataKhiTuongThuyVan.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DataKhiTuongThuyVan.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DataKhiTuongThuyVan.edmx</DependentUpon>
+      <LastGenOutput>DataKhiTuongThuyVan.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DataKhiTuongThuyVan.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DataKhiTuongThuyVan.edmx</DependentUpon>
+      <LastGenOutput>DataKhiTuongThuyVan.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

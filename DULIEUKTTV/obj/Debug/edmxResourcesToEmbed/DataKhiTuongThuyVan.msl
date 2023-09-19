@@ -1,0 +1,250 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="QLKTTVModelStoreContainer" CdmEntityContainer="EntitiesQLKTTV">
+    <EntitySetMapping Name="BanDoes">
+      <EntityTypeMapping TypeName="QLKTTVModel.BanDo">
+        <MappingFragment StoreEntitySet="BanDo">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TenBanDo" ColumnName="TenBanDo" />
+          <ScalarProperty Name="LoaiBanDo" ColumnName="LoaiBanDo" />
+          <ScalarProperty Name="TenTapTin" ColumnName="TenTapTin" />
+          <ScalarProperty Name="DuongDanURL" ColumnName="DuongDanURL" />
+          <ScalarProperty Name="MoTa" ColumnName="MoTa" />
+          <ScalarProperty Name="ThoiGianCapNhat" ColumnName="ThoiGianCapNhat" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BanTinDuBaos">
+      <EntityTypeMapping TypeName="QLKTTVModel.BanTinDuBao">
+        <MappingFragment StoreEntitySet="BanTinDuBao">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TieuDe" ColumnName="TieuDe" />
+          <ScalarProperty Name="TomTatNoiDung" ColumnName="TomTatNoiDung" />
+          <ScalarProperty Name="NoiDung" ColumnName="NoiDung" />
+          <ScalarProperty Name="NgayThucHien" ColumnName="NgayThucHien" />
+          <ScalarProperty Name="MaLoaiBanTin" ColumnName="MaLoaiBanTin" />
+          <ScalarProperty Name="MaKVHC" ColumnName="MaKVHC" />
+          <ScalarProperty Name="MoTaViTri" ColumnName="MoTaViTri" />
+          <ScalarProperty Name="MaKhuVuc" ColumnName="MaKhuVuc" />
+          <ScalarProperty Name="ThoiGianDuBao" ColumnName="ThoiGianDuBao" />
+          <ScalarProperty Name="MaCapDoDuBao" ColumnName="MaCapDoDuBao" />
+          <ScalarProperty Name="TenToChucDuBao" ColumnName="TenToChucDuBao" />
+          <ScalarProperty Name="MaLoaiThienTai" ColumnName="MaLoaiThienTai" />
+          <ScalarProperty Name="TrangThaiDuyet" ColumnName="TrangThaiDuyet" />
+          <ScalarProperty Name="BanTin_Status" ColumnName="BanTin_Status" />
+          <ScalarProperty Name="NguoiDang" ColumnName="NguoiDang" />
+          <ScalarProperty Name="NguonTinDuBao" ColumnName="NguonTinDuBao" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="KEY_SEARCH" ColumnName="KEY_SEARCH" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CapDoes">
+      <EntityTypeMapping TypeName="QLKTTVModel.CapDo">
+        <MappingFragment StoreEntitySet="CapDo">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TenLoaiCapDo" ColumnName="TenLoaiCapDo" />
+          <ScalarProperty Name="MoTa" ColumnName="MoTa" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DonViThoiGians">
+      <EntityTypeMapping TypeName="QLKTTVModel.DonViThoiGian">
+        <MappingFragment StoreEntitySet="DonViThoiGian">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TenDonVi" ColumnName="TenDonVi" />
+          <ScalarProperty Name="MoTa" ColumnName="MoTa" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DonViToChucs">
+      <EntityTypeMapping TypeName="QLKTTVModel.DonViToChuc">
+        <MappingFragment StoreEntitySet="DonViToChuc">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TenDonVi" ColumnName="TenDonVi" />
+          <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
+          <ScalarProperty Name="MaSoThue" ColumnName="MaSoThue" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="ToaDoX" ColumnName="ToaDoX" />
+          <ScalarProperty Name="ToaDoY" ColumnName="ToaDoY" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DVHC_Huyen">
+      <EntityTypeMapping TypeName="QLKTTVModel.DVHC_Huyen">
+        <MappingFragment StoreEntitySet="DVHC_Huyen">
+          <ScalarProperty Name="MaHuyen" ColumnName="MaHuyen" />
+          <ScalarProperty Name="MaTinh" ColumnName="MaTinh" />
+          <ScalarProperty Name="TenHuyen" ColumnName="TenHuyen" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DVHC_Tinh">
+      <EntityTypeMapping TypeName="QLKTTVModel.DVHC_Tinh">
+        <MappingFragment StoreEntitySet="DVHC_Tinh">
+          <ScalarProperty Name="MaTinh" ColumnName="MaTinh" />
+          <ScalarProperty Name="TenTinh" ColumnName="TenTinh" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DVHC_Xa">
+      <EntityTypeMapping TypeName="QLKTTVModel.DVHC_Xa">
+        <MappingFragment StoreEntitySet="DVHC_Xa">
+          <ScalarProperty Name="MaXa" ColumnName="MaXa" />
+          <ScalarProperty Name="MaHuyen" ColumnName="MaHuyen" />
+          <ScalarProperty Name="TenXa" ColumnName="TenXa" />
+          <ScalarProperty Name="TenHuyen" ColumnName="TenHuyen" />
+          <ScalarProperty Name="TenTinh" ColumnName="TenTinh" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="File_DinhKem">
+      <EntityTypeMapping TypeName="QLKTTVModel.File_DinhKem">
+        <MappingFragment StoreEntitySet="File_DinhKem">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ID_TaiLieu" ColumnName="ID_TaiLieu" />
+          <ScalarProperty Name="ID_GiayPhep" ColumnName="ID_GiayPhep" />
+          <ScalarProperty Name="Ten_FileDinhKem" ColumnName="Ten_FileDinhKem" />
+          <ScalarProperty Name="DuongDanURL" ColumnName="DuongDanURL" />
+          <ScalarProperty Name="NgayTao" ColumnName="NgayTao" />
+          <ScalarProperty Name="ViTri" ColumnName="ViTri" />
+          <ScalarProperty Name="IS_IMAGE" ColumnName="IS_IMAGE" />
+          <ScalarProperty Name="ISDELETE" ColumnName="ISDELETE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="KhuVucs">
+      <EntityTypeMapping TypeName="QLKTTVModel.KhuVuc">
+        <MappingFragment StoreEntitySet="KhuVuc">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TenKhuVuc" ColumnName="TenKhuVuc" />
+          <ScalarProperty Name="MoTa" ColumnName="MoTa" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="KhuVucHanhChinhs">
+      <EntityTypeMapping TypeName="QLKTTVModel.KhuVucHanhChinh">
+        <MappingFragment StoreEntitySet="KhuVucHanhChinh">
+          <ScalarProperty Name="MaKVHC" ColumnName="MaKVHC" />
+          <ScalarProperty Name="TenKVHC" ColumnName="TenKVHC" />
+          <ScalarProperty Name="MaKVHC_CapTren" ColumnName="MaKVHC_CapTren" />
+          <ScalarProperty Name="MaKhuVuc" ColumnName="MaKhuVuc" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LoaiBanTins">
+      <EntityTypeMapping TypeName="QLKTTVModel.LoaiBanTin">
+        <MappingFragment StoreEntitySet="LoaiBanTin">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TenLoaiBanTin" ColumnName="TenLoaiBanTin" />
+          <ScalarProperty Name="MaThanhPhanDuBao" ColumnName="MaThanhPhanDuBao" />
+          <ScalarProperty Name="MoTa" ColumnName="MoTa" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LoaiThienTais">
+      <EntityTypeMapping TypeName="QLKTTVModel.LoaiThienTai">
+        <MappingFragment StoreEntitySet="LoaiThienTai">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TenLoaiThienTai" ColumnName="TenLoaiThienTai" />
+          <ScalarProperty Name="MoTa" ColumnName="MoTa" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PhimHinhAnhs">
+      <EntityTypeMapping TypeName="QLKTTVModel.PhimHinhAnh">
+        <MappingFragment StoreEntitySet="PhimHinhAnh">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TieuDe" ColumnName="TieuDe" />
+          <ScalarProperty Name="NgayThang" ColumnName="NgayThang" />
+          <ScalarProperty Name="TenTapTin" ColumnName="TenTapTin" />
+          <ScalarProperty Name="DuongDanURL" ColumnName="DuongDanURL" />
+          <ScalarProperty Name="MoTa" ColumnName="MoTa" />
+          <ScalarProperty Name="GhiChu" ColumnName="GhiChu" />
+          <ScalarProperty Name="ThoiGianCapNhat" ColumnName="ThoiGianCapNhat" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="IsImage" ColumnName="IsImage" />
+          <ScalarProperty Name="IsVideo" ColumnName="IsVideo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TaiLieux">
+      <EntityTypeMapping TypeName="QLKTTVModel.TaiLieu">
+        <MappingFragment StoreEntitySet="TaiLieu">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ID_HoSo" ColumnName="ID_HoSo" />
+          <ScalarProperty Name="TenTaiLieu" ColumnName="TenTaiLieu" />
+          <ScalarProperty Name="NgayTao" ColumnName="NgayTao" />
+          <ScalarProperty Name="ID_NguoiTao" ColumnName="ID_NguoiTao" />
+          <ScalarProperty Name="SoLanTai" ColumnName="SoLanTai" />
+          <ScalarProperty Name="SoLanXem" ColumnName="SoLanXem" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TapTinDinhKems">
+      <EntityTypeMapping TypeName="QLKTTVModel.TapTinDinhKem">
+        <MappingFragment StoreEntitySet="TapTinDinhKem">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TenTapTin" ColumnName="TenTapTin" />
+          <ScalarProperty Name="MaBanTinDuBao" ColumnName="MaBanTinDuBao" />
+          <ScalarProperty Name="MoTa" ColumnName="MoTa" />
+          <ScalarProperty Name="NgayDinhKem" ColumnName="NgayDinhKem" />
+          <ScalarProperty Name="DuongDan" ColumnName="DuongDan" />
+          <ScalarProperty Name="IsVideo" ColumnName="IsVideo" />
+          <ScalarProperty Name="IsHinhAnh" ColumnName="IsHinhAnh" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ThanhPhanDuBaos">
+      <EntityTypeMapping TypeName="QLKTTVModel.ThanhPhanDuBao">
+        <MappingFragment StoreEntitySet="ThanhPhanDuBao">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TenThanhPhanDuBao" ColumnName="TenThanhPhanDuBao" />
+          <ScalarProperty Name="MoTa" ColumnName="MoTa" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ThoiHanDuBaos">
+      <EntityTypeMapping TypeName="QLKTTVModel.ThoiHanDuBao">
+        <MappingFragment StoreEntitySet="ThoiHanDuBao">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TenThoiHanDuBao" ColumnName="TenThoiHanDuBao" />
+          <ScalarProperty Name="MaThanhPhanDuBao" ColumnName="MaThanhPhanDuBao" />
+          <ScalarProperty Name="MaDonViThoiGian" ColumnName="MaDonViThoiGian" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="TuThoiGian" ColumnName="TuThoiGian" />
+          <ScalarProperty Name="DenThoiGian" ColumnName="DenThoiGian" />
+          <ScalarProperty Name="MoTa" ColumnName="MoTa" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ThongTinGiayPheps">
+      <EntityTypeMapping TypeName="QLKTTVModel.ThongTinGiayPhep">
+        <MappingFragment StoreEntitySet="ThongTinGiayPhep">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="SoHieu" ColumnName="SoHieu" />
+          <ScalarProperty Name="Nam" ColumnName="Nam" />
+          <ScalarProperty Name="NgayThang" ColumnName="NgayThang" />
+          <ScalarProperty Name="TenDonVi" ColumnName="TenDonVi" />
+          <ScalarProperty Name="PhamViHoatDong" ColumnName="PhamViHoatDong" />
+          <ScalarProperty Name="DoiTuongCungCap" ColumnName="DoiTuongCungCap" />
+          <ScalarProperty Name="GiaHan" ColumnName="GiaHan" />
+          <ScalarProperty Name="DonViKyXacNhan" ColumnName="DonViKyXacNhan" />
+          <ScalarProperty Name="MaCapDoDuBao" ColumnName="MaCapDoDuBao" />
+          <ScalarProperty Name="TrangThaiGiayPhep" ColumnName="TrangThaiGiayPhep" />
+          <ScalarProperty Name="LyDoThuHoi" ColumnName="LyDoThuHoi" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
