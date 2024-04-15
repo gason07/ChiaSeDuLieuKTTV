@@ -53,7 +53,7 @@ namespace CHIASEDULIEU.Controllers
             // Chuyển tên bản tin thành chữ thường và loại bỏ khoảng trống ở cả hai đầu
             tenBanTin = tenBanTin.Trim().ToLower();
             // Truy vấn
-            var banTinTheoTen = dbContext.BanTinDuBaos.Where(s => s.LoaiBanTin.TenLoaiBanTin.ToLower().Trim() == tenBanTin && s.IsDeleted == false).AsEnumerable()
+            var banTinTheoTen = dbContext.BanTinDuBaos.Where(s => s.LoaiBanTin.TenLoaiBanTin.ToLower().Trim().Contains(tenBanTin) && s.IsDeleted == false).AsEnumerable()
                 .Select(sp => new 
                 {
                     ID = sp.ID,
@@ -85,11 +85,11 @@ namespace CHIASEDULIEU.Controllers
             var bantins = dbContext.BanTinDuBaos.Where(s => s.ID == idbt && s.IsDeleted == false).AsEnumerable().Select(sp => new
                  {
                     ID = sp.ID,
-                    TieuDe = sp.TieuDe,
-                    TomTatNoiDung = sp.TomTatNoiDung,
-                    NoiDung = sp.NoiDung,
+                    TieuDe = HttpUtility.HtmlDecode(sp.TieuDe),
+                    TomTatNoiDung = HttpUtility.HtmlDecode(sp.TomTatNoiDung),
+                    NoiDung = HttpUtility.HtmlDecode(sp.NoiDung),
                     NgayThucHien = sp.NgayThucHien?.ToString("dd/MM/yyyy HH:mm:ss"),
-                    NguoiThucHien = sp.NguoiDang,
+                    NguoiThucHien = HttpUtility.HtmlDecode(sp.NguoiDang),
                     TenBanTin = sp.LoaiBanTin.TenLoaiBanTin,
                     //ThongTinDiaDiem = sp.KhuVucHanhChinh.TenKVHC,
                     KhuVucDuBao = sp.KhuVuc.TenKhuVuc,
@@ -98,7 +98,7 @@ namespace CHIASEDULIEU.Controllers
                     LoaiThienTai = sp.LoaiThienTai.TenLoaiThienTai,
                     //TenToChucDuBao = sp.TenToChucDuBao,
                     TrangThaiDuyet = sp.TrangThaiDuyet,
-                    TepDinhKem = sp.TapTinDinhKems.AsEnumerable().Select(fd => new 
+                    TepDinhKem = sp.TapTinDinhKems.AsEnumerable().Where(p => p.IsDeleted == false).Select(fd => new 
                     {
                         ID_TT = fd.ID,
                         TenTapTin = fd.TenTapTin,
