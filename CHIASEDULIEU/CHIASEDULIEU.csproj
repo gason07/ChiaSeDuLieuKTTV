@@ -96,12 +96,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\ChuyenDuLieuBanDoPhimAnhController.cs" />
-    <Compile Include="Controllers\ChuyenDuLieuBanTinDuBaoController.cs" />
-    <Compile Include="Controllers\ChuyenDuLieuThongTinGiayPhepController.cs" />
     <Compile Include="Controllers\LayDuLieuBanDoPhimAnhController.cs" />
     <Compile Include="Controllers\LayDuLieuBanTinDuBaoController.cs" />
     <Compile Include="Controllers\LayDuLieuThongTinGiayPhepController.cs" />
+    <Compile Include="Controllers\ChuyenDuLieuBanDoPhimAnhController.cs" />
+    <Compile Include="Controllers\ChuyenDuLieuBanTinDuBaoController.cs" />
+    <Compile Include="Controllers\ChuyenDuLieuThongTinGiayPhepController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

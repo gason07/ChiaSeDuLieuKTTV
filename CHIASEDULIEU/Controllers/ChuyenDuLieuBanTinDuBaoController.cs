@@ -1,172 +1,131 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using System.Configuration;
-using CHIASEDULIEU.Models.BanTinDuBao;
+using System.Web;
+using System.IO;
 using DULIEUKTTV;
 using CHIASEDULIEU.Utilities;
-
 
 namespace CHIASEDULIEU.Controllers
 {
     public class ChuyenDuLieuBanTinDuBaoController : ApiController
     {
-        EntitiesQLKTTV dbContext = new EntitiesQLKTTV();
-
-        //Lấy tất cả bản tin dự báo
-        [HttpGet]
-        public IHttpActionResult TatCaBanTinDuBao()
+        //Thêm bản tin dự báo
+        [HttpPost]
+        public IHttpActionResult ThemDuLieuBanTinDuBao123()
         {
-            var tatCaBanTin = dbContext.BanTinDuBaos.Where(s => s.IsDeleted == false).AsEnumerable()
-                .Select(sp => new 
-                {
-                    ID = sp.ID,
-                    TenBanTin = sp.LoaiBanTin.TenLoaiBanTin,
-                    NgayThucHien = sp.NgayThucHien?.ToString("dd/MM/yyyy HH:mm:ss")
-                }).OrderBy(s => s.ID);
-            if (tatCaBanTin.Count() > 0)
-            {
-                return Ok(new
-                {
-                    success_message = "Lấy danh sách tất cả bản tin thành công",
-                    total = tatCaBanTin.Count(),
-                    data = tatCaBanTin
-                });
-            }
-            else
-            {
-                return Ok(new
-                {
-                    error_message = "Lấy danh sách tất cả bản tin không thành công",
-                });
-            }
-        }
-
-        //Lấy danh sách bản tin dựa theo tên bản tin
-        [HttpGet]
-        public IHttpActionResult TimKiemBanTinDuaTheoTenBanTin(string tenBanTin)
-        {
-            // Chuyển tên bản tin thành chữ thường và loại bỏ khoảng trống ở cả hai đầu
-            tenBanTin = tenBanTin.Trim().ToLower();
-            // Truy vấn
-            var banTinTheoTen = dbContext.BanTinDuBaos.Where(s => s.LoaiBanTin.TenLoaiBanTin.ToLower().Trim() == tenBanTin && s.IsDeleted == false).AsEnumerable()
-                .Select(sp => new 
-                {
-                    ID = sp.ID,
-                    TenBanTin = sp.LoaiBanTin.TenLoaiBanTin,
-                    NgayThucHien = sp.NgayThucHien?.ToString("dd/MM/yyyy HH:mm:ss")
-                });
-            if (banTinTheoTen.Count() > 0)
-            {
-                return Ok(new
-                {
-                    success_message = "Lấy danh sách tất cả bản tin thành công",
-                    total = banTinTheoTen.Count(),
-                    data = banTinTheoTen
-                });
-            }
-            else
-            {
-                return Ok(new
-                {
-                    error_message = "Lấy danh sách tất cả bản tin không thành công",
-                });
-            }
-        }
-
-        //Lấy chi tiết bản tin dự báo theo ID
-        [HttpGet]
-        public IHttpActionResult LayChiTietBanTinDuBaoTheoID(int idbt)
-        {
-            var bantins = dbContext.BanTinDuBaos.Where(s => s.ID == idbt && s.IsDeleted == false).AsEnumerable().Select(sp => new
-                 {
-                    ID = sp.ID,
-                    TieuDe = sp.TieuDe,
-                    TomTatNoiDung = sp.TomTatNoiDung,
-                    NoiDung = sp.NoiDung,
-                    NgayThucHien = sp.NgayThucHien?.ToString("dd/MM/yyyy HH:mm:ss"),
-                    NguoiThucHien = sp.NguoiDang,
-                    TenBanTin = sp.LoaiBanTin.TenLoaiBanTin,
-                    //ThongTinDiaDiem = sp.KhuVucHanhChinh.TenKVHC,
-                    KhuVucDuBao = sp.KhuVuc.TenKhuVuc,
-                    ThoiGianDuBao = sp.ThoiHanDuBao.TuThoiGian?.ToString("dd/MM/yyyy") + " - " + sp.ThoiHanDuBao.DenThoiGian?.ToString("dd/MM/yyyy"),
-                    CapDoDuBao = sp.CapDo.TenLoaiCapDo,
-                    LoaiThienTai = sp.LoaiThienTai.TenLoaiThienTai,
-                    //TenToChucDuBao = sp.TenToChucDuBao,
-                    TrangThaiDuyet = sp.TrangThaiDuyet,
-                    TepDinhKem = sp.TapTinDinhKems.AsEnumerable().Select(fd => new 
-                    {
-                        ID_TT = fd.ID,
-                        TenTapTin = fd.TenTapTin,
-                        DuongDanURL = fd.DuongDan,
-                        NgayDinhKem = fd.NgayDinhKem?.ToString("dd/MM/yyyy"),
-                    }).ToList()
-                });
-            if (bantins.Count() > 0)
-            {
-                return Ok(new
-                {
-                    success_message = "Lấy chi tiết bản tin thành công",
-                    data = bantins
-                });
-            }
-            else
-            {
-                return Ok(new
-                {
-                    error_message = "Lấy chi tiết bản tin không thành công",
-                });
-            }
-        }
-
-        //Lấy tệp đính kèm (ảnh, phim, tài liệu) của bản tin
-        [HttpGet]
-        public HttpResponseMessage LayTepDinhKemTheoID(int idtbt)
-        {
-            EntitiesQLKTTV dbContext = new EntitiesQLKTTV();
-            var tepDinhKem = dbContext.TapTinDinhKems.FirstOrDefault(s => s.ID == idtbt && s.IsDeleted == false);
-            if (tepDinhKem == null)
-            {
-                //return new HttpResponseMessage(HttpStatusCode.NotFound);
-                HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.NotFound);
-                response.Content = new StringContent("Không tìm thấy tệp đính kèm.");
-                return response;
-            }
+            System.Collections.Specialized.NameValueCollection form = HttpContext.Current.Request.Form;
+            string TieuDe = form["TieuDe"];
+            string TomTatNoiDung = form["TomTatNoiDung"];
+            string NoiDung = form["NoiDung"];
+            string NguoiDang = form["NguoiDang"];
+            string TenToChucDuBao = form["TenToChucDuBao"];
+            string NguonTinDuBao = form["NguonTinDuBao"];
+            string KEY_SEARCH = form["KEY_SEARCH"];
+            int MaCapDoDuBao;
+            int.TryParse(form["MaCapDoDuBao"], out MaCapDoDuBao);
+            int MaKhuVuc;
+            int.TryParse(form["MaKhuVuc"], out MaKhuVuc);
+            int MaKVHC;
+            int.TryParse(form["MaKVHC"], out MaKVHC);
+            int MaLoaiThienTai;
+            int.TryParse(form["MaLoaiThienTai"], out MaLoaiThienTai);
+            int MaLoaiBanTin;
+            int.TryParse(form["MaLoaiBanTin"], out MaLoaiBanTin);
+            int ThoiGianDuBao;
+            int.TryParse(form["ThoiGianDuBao"], out ThoiGianDuBao);
+            bool TrangThaiDuyet;
+            bool TrangThaiDuyetResult = bool.TryParse(form["TrangThaiDuyet"], out TrangThaiDuyet);
+            string FilePath = null;
+            string path = null;
+            string fileName = null;
             string urlHost = ClsFtp.GetHostFTP();
             string UserName = ClsFtp.GetUserNameFTP();
             string Password = ClsFtp.GetPassWordFTP();
-            string folderPath = tepDinhKem.DuongDan;
-            var ftpRequest = (FtpWebRequest)WebRequest.Create(ClsFtp.GetHostFTP() + folderPath);
-            ftpRequest.Credentials = new NetworkCredential(ClsFtp.GetUserNameFTP(), ClsFtp.GetPassWordFTP());
-            ftpRequest.UseBinary = true;
-            ftpRequest.UsePassive = true;
-            ftpRequest.KeepAlive = true;
-            ftpRequest.Method = WebRequestMethods.Ftp.DownloadFile;
-            var ftpResponse = (FtpWebResponse)ftpRequest.GetResponse();
-            if (ftpResponse.StatusCode == FtpStatusCode.CommandOK && ftpResponse.StatusCode != FtpStatusCode.ClosingData)
+            EntitiesQLKTTV dbContext = new EntitiesQLKTTV();
+            BanTinDuBao banTinDuBao = new BanTinDuBao();
+            banTinDuBao.TieuDe = TieuDe;
+            banTinDuBao.TomTatNoiDung = TomTatNoiDung;
+            banTinDuBao.NoiDung = NoiDung;
+            banTinDuBao.NgayThucHien = DateTime.Now;
+            banTinDuBao.NguoiDang = NguoiDang;
+            banTinDuBao.TenToChucDuBao = TenToChucDuBao;
+            banTinDuBao.NguonTinDuBao = NguonTinDuBao;
+            banTinDuBao.KEY_SEARCH = KEY_SEARCH;
+            banTinDuBao.MaCapDoDuBao = MaCapDoDuBao;
+            banTinDuBao.MaKhuVuc = MaKhuVuc;
+            banTinDuBao.MaKVHC = MaKVHC;
+            banTinDuBao.MaLoaiThienTai = MaLoaiThienTai;
+            banTinDuBao.MaLoaiBanTin = MaLoaiBanTin;
+            banTinDuBao.ThoiGianDuBao = ThoiGianDuBao;
+            banTinDuBao.TrangThaiDuyet = true;
+            dbContext.BanTinDuBaos.Add(banTinDuBao);
+            dbContext.SaveChanges();
+            for (int i = 0; i < HttpContext.Current.Request.Files.Count; i++)
             {
-                HttpResponseMessage errorResponse = new HttpResponseMessage(HttpStatusCode.InternalServerError);
-                errorResponse.Content = new StringContent("Không kết nối được với máy chủ FTP.");
-                return errorResponse;
-            }
-            var ftpStream = ftpResponse.GetResponseStream();
-            var contentType = MimeMapping.GetMimeMapping(tepDinhKem.TenTapTin);
-            var result = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StreamContent(ftpStream)
-            };
-            result.Content.Headers.ContentDisposition =
-                new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment")
+                var filepath = HttpContext.Current.Request.Files.Count > 0 ?
+                HttpContext.Current.Request.Files[i] : null;
+                if (filepath != null && filepath.ContentLength > 0)
                 {
-                    FileName = tepDinhKem.TenTapTin
-                };
-            result.Content.Headers.ContentType =
-                new System.Net.Http.Headers.MediaTypeHeaderValue(contentType);
-            return result;
+                    fileName = Path.GetFileName(filepath.FileName);
+                    path = Path.Combine(HttpContext.Current.Server.MapPath("~/App_Data"), fileName);
+                    filepath.SaveAs(path);
+
+                    // Xác định kiểu của tệp đính kèm bằng cách sử dụng ClsFtp
+                    string mimeType = ClsFtp.GetMimeTypeByFileName(fileName);
+
+                    // Kiểm tra kiểu MIME để xác định xem tệp là hình ảnh hay video
+                    bool IsImage = mimeType.StartsWith("image/");
+                    bool IsVideo = mimeType.StartsWith("video/");
+
+                    //Nếu là hình ảnh thì lưu vào thư mục hình ảnh, video thì lưu vào mục video, tài liệu thì lưu vào mục văn bản
+                    string folderToSave = IsImage ? "HinhAnh/" : (IsVideo ? "Video/" : "VanBan/");
+
+                    TapTinDinhKem FileDK = new TapTinDinhKem();
+                    FileDK.TenTapTin = fileName;
+                    FileDK.MaBanTinDuBao = banTinDuBao.ID;
+                    FileDK.NgayDinhKem = DateTime.Now;
+                    FileDK.IsHinhAnh = IsImage;
+                    FileDK.IsVideo = IsVideo;
+                    FileDK.IsDeleted = false;
+                    int max_ID = dbContext.BanTinDuBaos.Max(p => p.ID);
+                    FilePath = urlHost + "/FileUpload/" + folderToSave + max_ID.ToString() + @"/" + fileName;
+                    FileDK.DuongDan = "/FileUpload/" + folderToSave + max_ID.ToString() + @"/" + fileName;
+                    dbContext.TapTinDinhKems.Add(FileDK);
+                    banTinDuBao.TapTinDinhKems.Add(FileDK);
+
+                    //Lưu tệp đính kèm vào thư mục FTP
+                    string ten_FolderSaveToFTP = "/FileUpload/" + folderToSave + FileDK.MaBanTinDuBao.ToString();
+                    bool createFolder = ClsFtp.CreateFolder(urlHost, ten_FolderSaveToFTP, UserName, Password);
+                    if (createFolder)
+                    {
+                        bool fileUploaded = ClsFtp.UploadFile(urlHost, ten_FolderSaveToFTP, fileName, path, UserName, Password);
+                    }
+                    //xóa app_Data
+                    File.Delete(path);
+                }
+            }
+            dbContext.SaveChanges();
+            return Ok(new
+            {
+                FilePath,
+                TieuDe,
+                TomTatNoiDung,
+                NoiDung,
+                NguoiDang,
+                TenToChucDuBao,
+                NguonTinDuBao,
+                KEY_SEARCH,
+                MaCapDoDuBao,
+                MaKVHC,
+                MaLoaiThienTai,
+                MaLoaiBanTin,
+                ThoiGianDuBao,
+                TrangThaiDuyet,
+            });
         }
     }
 }

@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web;
+using System.IO;
 using DULIEUKTTV;
 using CHIASEDULIEU.Utilities;
 
@@ -12,126 +13,102 @@ namespace CHIASEDULIEU.Controllers
 {
     public class ChuyenDuLieuThongTinGiayPhepController : ApiController
     {
-        EntitiesQLKTTV dbContext = new EntitiesQLKTTV();
-
-        //Lấy tất cả thông tin giấy phép
-        [HttpGet]
-        public IHttpActionResult TatCaGiayPhep()
+        //Thêm thông tin giấy phép
+        [HttpPost]
+        public IHttpActionResult ThemDuLieuGiayPhep()
         {
-            var giayPhep = dbContext.ThongTinGiayPheps.Where(gp => gp.IsDeleted == false).AsEnumerable()
-            .Select(sp => new 
+            System.Collections.Specialized.NameValueCollection form = HttpContext.Current.Request.Form;
+            string SoHieu = form["SoHieu"];
+            string Nam = form["Nam"];
+            string ngayThangStr = form["NgayThang"];
+            DateTime? NgayThang = null;
+            if (!string.IsNullOrEmpty(ngayThangStr)) //chuyển đổi chuỗi form["NgayThang"] thành kiểu DateTime
             {
-                ID = sp.ID,
-                SoHieu = sp.SoHieu,
-                Nam = sp.Nam,
-                NgayThang = sp.NgayThang?.ToString("dd/MM/yyyy")
-            }).OrderBy(s => s.ID);
-            if (giayPhep.Count() > 0)
-            {
-                return Ok(new
-                {
-                    success_message = "Lấy tất cả thông tin giấy phép thành công",
-                    total = giayPhep.Count(),
-                    data = giayPhep
-                });
+                NgayThang = ClsFunctionDate.ConvertDate(ngayThangStr);
             }
-            else
-            {
-                return Ok(new
-                {
-                    error_message = "Lấy tất cả thông tin giấy phép không thành công",
-                });
-            }
-        }
-    
-        //Lấy chi tiết thông tin giấy phép theo ID
-        [HttpGet]
-        public IHttpActionResult LayThongTinGiayPhepTheoID(int idgp)
-        {
-            var chiTietGiayPhep = dbContext.ThongTinGiayPheps.Where(s => s.ID == idgp && s.IsDeleted == false).AsEnumerable()
-                .Select(sp => new 
-                {
-                    ID = sp.ID,
-                    SoHieu = sp.SoHieu,
-                    Nam = sp.Nam,
-                    NgayThang = sp.NgayThang?.ToString("dd/MM/yyyy"),
-                    TenDonViDuocCapPhep = sp.TenDonVi,
-                    PhamViHoatDongDuBao = sp.PhamViHoatDong,
-                    DoiTuongCungCap = sp.DonViToChuc.TenDonVi,
-                    GiaHan = sp.GiaHan,
-                    DonViKyXacNhan = sp.DonViToChuc1.TenDonVi,
-                    LoaiCapDo = sp.CapDo.TenLoaiCapDo,
-                    TrangThaiGiayPhep = sp.TrangThaiGiayPhep,
-                    LyDoThuHoi = sp.LyDoThuHoi,
-                    GiayPhepDinhKem = sp.File_DinhKem.AsEnumerable().Select(gpdk => new
-                    {
-                        ID_GiayPhep = gpdk.ID_GiayPhep,
-                        Ten_FileDinhKem = gpdk.Ten_FileDinhKem,
-                        DuongDanURL = gpdk.DuongDanURL,
-                        NgayTao = gpdk.NgayTao?.ToString("dd/MM/yyyy")
-                    }).ToList()    
-                }).OrderBy(s => s.ID).ToList();
-            if (chiTietGiayPhep.Count() > 0)
-            {
-                return Ok(new
-                {
-                    success_message = "Lấy chi tiết thông tin giấy phép thành công",
-                    data = chiTietGiayPhep
-                });
-            }
-            else
-            {
-                return Ok(new
-                {
-                    error_message = "Lấy chi tiết thông tin giấy phép không thành công",
-                });
-            }
-        }
-
-        //Lấy file giấy phép đi kèm theo ID thông tin giấy phép
-        [HttpGet]
-        public HttpResponseMessage LayTepDinhKemCuaGiayPhepTheoID(int idtgp)
-        {
-            EntitiesQLKTTV dbContext = new EntitiesQLKTTV();
-            var giayPhepDinhKem = dbContext.File_DinhKem.FirstOrDefault(gp => gp.ID_GiayPhep == idtgp && gp.ISDELETE == false);
-            if (giayPhepDinhKem == null)
-            {
-                //return new HttpResponseMessage(HttpStatusCode.NotFound);
-                HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.NotFound);
-                response.Content = new StringContent("Không tìm thấy giấy phép đính kèm.");
-                return response;
-            }
+            string TenDonVi = form["TenDonVi"];
+            string GiaHan = form["GiaHan"];
+            string LyDoThuHoi = form["LyDoThuHoi"];
+            string PhamViHoatDong = form["PhamViHoatDong"];
+            string TrangThaiGiayPhep = form["TrangThaiGiayPhep"];
+            int DoiTuongCungCap;
+            int.TryParse(form["DoiTuongCungCap"], out DoiTuongCungCap);
+            int DonViKyXacNhan;
+            int.TryParse(form["DonViKyXacNhan"], out DonViKyXacNhan);
+            int MaCapDoDuBao;
+            int.TryParse(form["MaCapDoDuBao"], out MaCapDoDuBao);
+            string FilePath = null;
+            string path = null;
+            string fileName = null;
             string urlHost = ClsFtp.GetHostFTP();
             string UserName = ClsFtp.GetUserNameFTP();
             string Password = ClsFtp.GetPassWordFTP();
-            string folderPath = giayPhepDinhKem.DuongDanURL;
-            var ftpRequest = (FtpWebRequest)WebRequest.Create(ClsFtp.GetHostFTP() + folderPath);
-            ftpRequest.Credentials = new NetworkCredential(ClsFtp.GetUserNameFTP(), ClsFtp.GetPassWordFTP());
-            ftpRequest.UseBinary = true;
-            ftpRequest.UsePassive = true;
-            ftpRequest.KeepAlive = true;
-            ftpRequest.Method = WebRequestMethods.Ftp.DownloadFile;
-            var ftpResponse = (FtpWebResponse)ftpRequest.GetResponse();
-            if (ftpResponse.StatusCode == FtpStatusCode.CommandOK && ftpResponse.StatusCode != FtpStatusCode.ClosingData)
+            EntitiesQLKTTV dbContext = new EntitiesQLKTTV();
+            ThongTinGiayPhep thongTinGiayPhep = new ThongTinGiayPhep();
+            thongTinGiayPhep.SoHieu = SoHieu;
+            thongTinGiayPhep.Nam = Nam;
+            thongTinGiayPhep.NgayThang = NgayThang;
+            thongTinGiayPhep.TenDonVi = TenDonVi;
+            thongTinGiayPhep.GiaHan = GiaHan;
+            thongTinGiayPhep.LyDoThuHoi = LyDoThuHoi;
+            thongTinGiayPhep.PhamViHoatDong = PhamViHoatDong;
+            thongTinGiayPhep.TrangThaiGiayPhep = TrangThaiGiayPhep;
+            thongTinGiayPhep.DoiTuongCungCap = DoiTuongCungCap;
+            thongTinGiayPhep.DonViKyXacNhan = DonViKyXacNhan;
+            thongTinGiayPhep.MaCapDoDuBao = MaCapDoDuBao;
+            dbContext.ThongTinGiayPheps.Add(thongTinGiayPhep);
+            dbContext.SaveChanges();
+            for (int i = 0; i < HttpContext.Current.Request.Files.Count; i++)
             {
-                HttpResponseMessage errorResponse = new HttpResponseMessage(HttpStatusCode.InternalServerError);
-                errorResponse.Content = new StringContent("Không kết nối được với máy chủ FTP.");
-                return errorResponse;
-            }
-            var ftpStream = ftpResponse.GetResponseStream();
-            var contentType = MimeMapping.GetMimeMapping(giayPhepDinhKem.Ten_FileDinhKem);
-            var result = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StreamContent(ftpStream)
-            };
-            result.Content.Headers.ContentDisposition =
-                new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment")
+                var filepath = HttpContext.Current.Request.Files.Count > 0 ?
+                HttpContext.Current.Request.Files[i] : null;
+                if (filepath != null && filepath.ContentLength > 0)
                 {
-                    FileName = giayPhepDinhKem.Ten_FileDinhKem
-                };
-            result.Content.Headers.ContentType =
-                new System.Net.Http.Headers.MediaTypeHeaderValue(contentType);
-            return result;
+                    fileName = Path.GetFileName(filepath.FileName);
+                    path = Path.Combine(HttpContext.Current.Server.MapPath("~/App_Data"), fileName);
+                    filepath.SaveAs(path);
+                    string FileName = System.IO.Path.GetFileName(filepath.FileName);
+                    string FileTest = System.IO.Path.GetFullPath(filepath.FileName);
+                    File_DinhKem FileDK = new File_DinhKem();
+                    FileDK.ID_GiayPhep = thongTinGiayPhep.ID;
+                    FileDK.Ten_FileDinhKem = fileName;
+                    FileDK.NgayTao = DateTime.Now;
+                    FileDK.IS_IMAGE = false;
+                    FileDK.ISDELETE = false;
+                    int max_ID = dbContext.ThongTinGiayPheps.Max(p => p.ID);
+                    FilePath = urlHost + "/ThongTinGiayPhep/" + max_ID.ToString() + @"/" + fileName;
+                    FileDK.DuongDanURL = "/ThongTinGiayPhep/" + max_ID.ToString() + @"/" + fileName;
+                    dbContext.File_DinhKem.Add(FileDK);
+                    thongTinGiayPhep.File_DinhKem.Add(FileDK);
+
+
+                    //Lưu tệp đính kèm vào thư mục FTP
+                    string ten_FolderSaveToFTP = "/ThongTinGiayPhep/" + FileDK.ID_GiayPhep.ToString();
+                    bool createFolder = ClsFtp.CreateFolder(urlHost, ten_FolderSaveToFTP, UserName, Password);
+                    if (createFolder)
+                    {
+                        bool fileUploaded = ClsFtp.UploadFile(urlHost, ten_FolderSaveToFTP, fileName, path, UserName, Password);
+                    }
+                    //xóa app_Data
+                    File.Delete(path);
+                }
+            }
+            dbContext.SaveChanges();
+            return Ok(new
+            {
+                FilePath,
+                SoHieu,
+                Nam,
+                NgayThang,
+                TenDonVi,
+                GiaHan,
+                LyDoThuHoi,
+                PhamViHoatDong,
+                TrangThaiGiayPhep,
+                DoiTuongCungCap,
+                DonViKyXacNhan,
+                MaCapDoDuBao,
+            });
         }
     }
 }
